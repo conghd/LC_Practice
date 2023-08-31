@@ -3,6 +3,24 @@ import com.conghd.Testable;
 
 public class MinimumSizeSubArraySum implements Testable {
     public int minSubArrayLen(int target, int[] nums) {
+        int ret = nums.length + 1;
+        int sum = 0;
+        int k = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            if (sum >= target) {
+                while (sum >= target) {
+                    sum -= nums[k++];
+                }
+
+                ret = (ret < i-k+2) ? ret : i-k+2;
+            }
+        }
+
+        return ret == nums.length-1 ? 0 : ret;
+    }
+
+    public int minSubArrayLen2(int target, int[] nums) {
         // Check whether the each single element is equal or bigger than target
         for (int i = 0; i < nums.length; i++) {
             if (nums[i] >= target) {
